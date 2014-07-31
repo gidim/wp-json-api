@@ -177,6 +177,16 @@ class JSON_API_Post {
     'pagelink'         => '%',
     'echo'             => 0
   );
+
+    //get html with links to all pages
+     $str = wp_link_pages($args);
+
+     $pages = array();
+     $pages = explode("|",$str);
+
+     $this->number_of_pages =  count($pages);
+
+  }
   
   function set_value($key, $value) {
     global $json_api;
