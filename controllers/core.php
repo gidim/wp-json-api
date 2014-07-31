@@ -64,9 +64,8 @@ class JSON_API_Core_Controller {
     if ($post) {
       $previous = get_adjacent_post(false, '', true);
       $next = get_adjacent_post(false, '', false);
-      
       $previosInCategory = get_adjacent_post(true, '', true);
-      $nextInCategory = get_adjacent_post(true, '', false);
+    
 
       $response = array(
         'post' => new JSON_API_Post($post)
@@ -77,14 +76,10 @@ class JSON_API_Core_Controller {
       if ($next) {
         $response['next_url'] = get_permalink($next->ID);
       }
+
       if ($previosInCategory) {
         $response['category_previous_url'] = get_permalink($previosInCategory->ID);
       }
-      if ($nextInCategory) {
-        $response['category_next_url'] = get_permalink($nextInCategory->ID);
-      }
-
-
 
       return $response;
     } else {
