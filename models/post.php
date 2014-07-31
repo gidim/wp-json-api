@@ -25,6 +25,8 @@ class JSON_API_Post {
   var $comment_status;  // String ("open" or "closed")
   var $thumbnail;       // String
   var $custom_fields;   // Object (included by using custom_fields query var)
+  var $number_of_pages; // Integer, number of pages in case of in-post pagination
+
   
   function JSON_API_Post($wp_post = null) {
     if (!empty($wp_post)) {
@@ -150,8 +152,31 @@ class JSON_API_Post {
     $this->set_thumbnail_value();
     $this->set_custom_fields_value();
     $this->set_custom_taxonomies($wp_post->post_type);
+    $this->set_num_pages();
+
     do_action("json_api_import_wp_post", $this, $wp_post);
+
+
   }
+
+    /*
+  This function extracts the number of pages within a paginated post.
+  */
+  function set_num_pages(){
+
+    //build query
+    $args = array(
+    'before'           => '',
+    'after'            => '',
+    'link_before'      => '',
+    'link_after'       => '',
+    'next_or_number'   => 'number',
+    'separator'        => '|',
+    'nextpagelink'     => '',
+    'previouspagelink' => '',
+    'pagelink'         => '%',
+    'echo'             => 0
+  );
   
   function set_value($key, $value) {
     global $json_api;
